@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script src="./v1/index.js"></script>
-    <title>Bitshared Hub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic JSON Viewer</title>
 </head>
 <body>
-    <h1>Wellcome Bitshared Blockchain</h1>
-    <!-- Memuat file script.js dari folder js -->
-   
+  <h1>Data Viewer</h1>
+  <div id="output"></div>
+
+  <script>
+    // Baca fragment dari URL
+    const hash = window.location.hash.substring(1); // Hapus tanda `#`
+    const params = new URLSearchParams(hash);
+
+    // Ambil parameter 'nama'
+    const nama = params.get("nama") || "Default Name";
+
+    // Fetch data dari JSON
+    fetch("https://bitshared.github.io/api/data.json")
+      .then(response => response.json())
+      .then(data => {
+        // Ubah data sesuai parameter URL
+        data.name = nama;
+
+        // Tampilkan data di halaman
+        const output = document.getElementById("output");
+        output.textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        console.error("Error fetching JSON:", error);
+      });
+  </script>
 </body>
 </html>
