@@ -4,7 +4,7 @@ if (Notification.permission !== "granted") {
 }
 
 // Membuat Web Worker
-const worker = new Worker('server.js');
+const worker = new Worker('./server.js');
 
 // Kirim pesan ke worker saat tombol diklik
 document.getElementById('sendMessageBtn').addEventListener('click', function() {
