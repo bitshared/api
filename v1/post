@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Example</title>
+</head>
+<body>
+    <h1>Main Thread</h1>
+    <button id="sendMessageBtn">Send Message to Worker</button>
+
+    <script>
+        // Meminta izin untuk menampilkan notifikasi
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+
+        // Membuat Web Worker
+        const worker = new Worker('server.js');
+
+        // Kirim pesan ke worker saat tombol diklik
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            worker.postMessage('Hello Worker!');
+        });
+
+        // Mendengarkan balasan dari worker
+        worker.onmessage = function(event) {
+            console.log('Received from worker:', event.data);
+
+            // Menampilkan notifikasi saat menerima balasan
+            if (Notification.permission === "granted") {
+                new Notification('Message from Worker', {
+                    body: event.data,
+                    icon: 'android-chrome-192x192.png'
+                });
+            }
+        };
+    </script>
+</body>
+</html>
