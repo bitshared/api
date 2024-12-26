@@ -23,3 +23,7 @@ worker.onmessage = function(event) {
         });
     }
 };
+
+let path = location.pathname
+
+console.log(path)
