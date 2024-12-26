@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Example</title>
+</head>
+<body>
+    <h1>Main Thread</h1>
+    <button id="sendMessageBtn">Send Message to Worker</button>
+
+    <script>
+        // Membuat Web Worker
+        const worker = new Worker('worker.js');
+
+        // Kirim pesan ke worker saat tombol diklik
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            worker.postMessage('Hello Worker!');
+        });
+
+        // Mendengarkan balasan dari worker
+        worker.onmessage = function(event) {
+            console.log('Received from worker:', event.data);
+        };
+    </script>
+</body>
+</html>
