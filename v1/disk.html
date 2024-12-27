@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Input Data dengan Modal Card</title>
+  <title>Dropdown dalam Modal Card</title>
   <style>
     /* Gaya tabel */
     table {
@@ -51,7 +51,7 @@
       margin-bottom: 20px;
       color: #333;
     }
-    .modal-card input {
+    .modal-card select, .modal-card input {
       width: 90%;
       padding: 10px;
       margin: 10px 0;
@@ -76,7 +76,7 @@
   </style>
 </head>
 <body>
-  <h1>Tabel Dinamis dengan Modal Card</h1>
+  <h1>Tabel Dinamis dengan Dropdown</h1>
   <button id="openModalBtn">Tambah Data</button>
   <table id="dynamicTable">
     <thead>
@@ -91,7 +91,13 @@
   <div id="inputModal" class="modal">
     <div class="modal-card">
       <h3>Tambah Data</h3>
-      <input type="text" id="categoryInput" placeholder="Masukkan kategori">
+      <label for="categoryDropdown">Pilih Kategori:</label>
+      <select id="categoryDropdown">
+        <option value="Buah">Buah</option>
+        <option value="Sayur">Sayur</option>
+        <option value="Minuman">Minuman</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
       <input type="text" id="subcategoryInput" placeholder="Masukkan subkategori">
       <button class="save-btn" id="saveDataBtn">Simpan</button>
       <button class="cancel-btn" id="closeModalBtn">Batal</button>
@@ -147,15 +153,15 @@
 
     // Tambahkan data baru ke tabel
     function addData() {
-      const category = document.getElementById("categoryInput").value.trim();
+      const category = document.getElementById("categoryDropdown").value;
       const subcategory = document.getElementById("subcategoryInput").value.trim();
 
-      if (category && subcategory) {
+      if (subcategory) {
         data.push([category, subcategory]);
         populateTable(data);
         closeModal(); // Tutup modal setelah data ditambahkan
       } else {
-        alert("Harap isi semua kolom!");
+        alert("Harap isi subkategori!");
       }
     }
 
