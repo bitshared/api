@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabel dari JSON</title>
+  <title>Tabel Dinamis dari JSON</title>
   <style>
     table {
       border-collapse: collapse;
@@ -25,15 +25,10 @@
   </style>
 </head>
 <body>
-  <h1>Tabel dari JSON</h1>
+  <h1>Tabel Dinamis dari JSON</h1>
   <table id="jsonTable">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nama</th>
-        <th>Umur</th>
-        <th>Kota</th>
-      </tr>
+      <!-- Header akan diisi oleh JavaScript -->
     </thead>
     <tbody>
       <!-- Data akan diisi oleh JavaScript -->
@@ -48,22 +43,38 @@
       { "id": 3, "nama": "Citra", "umur": 28, "kota": "Bandung" }
     ];
 
-    // Fungsi untuk membuat tabel dari JSON
+    // Fungsi untuk membuat header tabel dari kunci JSON
+    function createTableHeader(data) {
+      const tableHead = document.querySelector("#jsonTable thead");
+      const headerRow = document.createElement("tr");
+      
+      // Ambil kunci dari objek pertama dalam JSON
+      const keys = Object.keys(data[0]);
+      keys.forEach(key => {
+        const th = document.createElement("th");
+        th.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Kapitalisasi
+        headerRow.appendChild(th);
+      });
+      
+      tableHead.appendChild(headerRow);
+    }
+
+    // Fungsi untuk mengisi tabel dengan data JSON
     function populateTable(data) {
       const tableBody = document.querySelector("#jsonTable tbody");
       data.forEach(item => {
         const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${item.id}</td>
-          <td>${item.nama}</td>
-          <td>${item.umur}</td>
-          <td>${item.kota}</td>
-        `;
+        for (const key in item) {
+          const td = document.createElement("td");
+          td.textContent = item[key];
+          row.appendChild(td);
+        }
         tableBody.appendChild(row);
       });
     }
 
-    // Panggil fungsi dengan data JSON
+    // Panggil fungsi untuk membuat tabel
+    createTableHeader(jsonData);
     populateTable(jsonData);
   </script>
 </body>
