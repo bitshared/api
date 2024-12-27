@@ -1,16 +1,70 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disk</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabel dari JSON</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      font-size: 18px;
+      text-align: left;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
-    <script type="module">
-        
-        
-        
-        
-    </script>
+  <h1>Tabel dari JSON</h1>
+  <table id="jsonTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Umur</th>
+        <th>Kota</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data akan diisi oleh JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    // Data JSON
+    const jsonData = [
+      { "id": 1, "nama": "Andi", "umur": 25, "kota": "Jakarta" },
+      { "id": 2, "nama": "Budi", "umur": 30, "kota": "Surabaya" },
+      { "id": 3, "nama": "Citra", "umur": 28, "kota": "Bandung" }
+    ];
+
+    // Fungsi untuk membuat tabel dari JSON
+    function populateTable(data) {
+      const tableBody = document.querySelector("#jsonTable tbody");
+      data.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.id}</td>
+          <td>${item.nama}</td>
+          <td>${item.umur}</td>
+          <td>${item.kota}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Panggil fungsi dengan data JSON
+    populateTable(jsonData);
+  </script>
 </body>
 </html>
