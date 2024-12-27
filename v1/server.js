@@ -8,5 +8,6 @@ onmessage = function(event) {
 };
 
 function disk(){
-    console.log("disk")
+    let disk = localStorage
+    console.log(disk)
 }
