@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabel Dinamis</title>
+  <title>Tabel Dinamis dengan Input Data</title>
   <style>
     table {
       border-collapse: collapse;
@@ -22,10 +22,49 @@
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+    }
+    .modal-content button {
+      width: 48%;
+      padding: 10px;
+      margin: 5px 1%;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .save-btn {
+      background-color: #28a745;
+    }
+    .cancel-btn {
+      background-color: #dc3545;
+    }
   </style>
 </head>
 <body>
-  <h1>Tabel Dinamis</h1>
+  <h1>Tabel Dinamis dengan Input Data</h1>
+  <button id="openModalBtn">Tambah Data</button>
   <table id="dynamicTable">
     <thead>
       <!-- Header akan diisi oleh JavaScript -->
@@ -35,13 +74,25 @@
     </tbody>
   </table>
 
+  <!-- Modal -->
+  <div id="inputModal" class="modal">
+    <div class="modal-content">
+      <h3>Tambah Data</h3>
+      <label for="categoryInput">Category:</label>
+      <input type="text" id="categoryInput" placeholder="Masukkan kategori">
+      <label for="subcategoryInput">Subcategory:</label>
+      <input type="text" id="subcategoryInput" placeholder="Masukkan subkategori">
+      <button class="save-btn" id="saveDataBtn">Simpan</button>
+      <button class="cancel-btn" id="closeModalBtn">Batal</button>
+    </div>
+  </div>
+
   <script>
-    // Data Array
-    const headers = ["Category", "Subcategory","price","quantity","fee","exprice","note"];
+    const headers = ["Category", "Subcategory"];
     const data = [
-      ["Buah", "Apel","","","",""],
-      ["Sayur", "Bayam","","","",""],
-      ["Minuman", "Teh","","","",""]
+      ["Buah", "Apel"],
+      ["Sayur", "Bayam"],
+      ["Minuman", "Teh"]
     ];
 
     // Fungsi untuk membuat header tabel
@@ -61,7 +112,7 @@
     // Fungsi untuk mengisi tabel dengan data
     function populateTable(data) {
       const tableBody = document.querySelector("#dynamicTable tbody");
-
+      tableBody.innerHTML = ""; // Kosongkan tabel sebelum diisi ulang
       data.forEach(rowData => {
         const row = document.createElement("tr");
         rowData.forEach(cellData => {
@@ -73,7 +124,36 @@
       });
     }
 
-    // Panggil fungsi untuk membuat tabel
+    // Fungsi untuk membuka modal
+    function openModal() {
+      document.getElementById("inputModal").style.display = "block";
+    }
+
+    // Fungsi untuk menutup modal
+    function closeModal() {
+      document.getElementById("inputModal").style.display = "none";
+    }
+
+    // Tambahkan data baru ke tabel
+    function addData() {
+      const category = document.getElementById("categoryInput").value.trim();
+      const subcategory = document.getElementById("subcategoryInput").value.trim();
+
+      if (category && subcategory) {
+        data.push([category, subcategory]);
+        populateTable(data);
+        closeModal(); // Tutup modal setelah data ditambahkan
+      } else {
+        alert("Harap isi semua kolom!");
+      }
+    }
+
+    // Event listeners
+    document.getElementById("openModalBtn").addEventListener("click", openModal);
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("saveDataBtn").addEventListener("click", addData);
+
+    // Inisialisasi tabel
     createTableHeader(headers);
     populateTable(data);
   </script>
