@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabel Dinamis dari JSON</title>
+  <title>Tabel Dinamis</title>
   <style>
     table {
       border-collapse: collapse;
@@ -25,8 +25,8 @@
   </style>
 </head>
 <body>
-  <h1>Tabel Dinamis dari JSON</h1>
-  <table id="jsonTable">
+  <h1>Tabel Dinamis</h1>
+  <table id="dynamicTable">
     <thead>
       <!-- Header akan diisi oleh JavaScript -->
     </thead>
@@ -36,46 +36,46 @@
   </table>
 
   <script>
-    // Data JSON
-    const jsonData = [
-      { "id": 1, "nama": "Andi", "umur": 25, "kota": "Jakarta" },
-      { "id": 2, "nama": "Budi", "umur": 30, "kota": "Surabaya" },
-      { "id": 3, "nama": "Citra", "umur": 28, "kota": "Bandung" }
+    // Data Array
+    const headers = ["Category", "Subcategory"];
+    const data = [
+      ["Buah", "Apel"],
+      ["Sayur", "Bayam"],
+      ["Minuman", "Teh"]
     ];
 
-    // Fungsi untuk membuat header tabel dari kunci JSON
-    function createTableHeader(data) {
-      const tableHead = document.querySelector("#jsonTable thead");
+    // Fungsi untuk membuat header tabel
+    function createTableHeader(headers) {
+      const tableHead = document.querySelector("#dynamicTable thead");
       const headerRow = document.createElement("tr");
-      
-      // Ambil kunci dari objek pertama dalam JSON
-      const keys = Object.keys(data[0]);
-      keys.forEach(key => {
+
+      headers.forEach(header => {
         const th = document.createElement("th");
-        th.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Kapitalisasi
+        th.textContent = header;
         headerRow.appendChild(th);
       });
-      
+
       tableHead.appendChild(headerRow);
     }
 
-    // Fungsi untuk mengisi tabel dengan data JSON
+    // Fungsi untuk mengisi tabel dengan data
     function populateTable(data) {
-      const tableBody = document.querySelector("#jsonTable tbody");
-      data.forEach(item => {
+      const tableBody = document.querySelector("#dynamicTable tbody");
+
+      data.forEach(rowData => {
         const row = document.createElement("tr");
-        for (const key in item) {
+        rowData.forEach(cellData => {
           const td = document.createElement("td");
-          td.textContent = item[key];
+          td.textContent = cellData;
           row.appendChild(td);
-        }
+        });
         tableBody.appendChild(row);
       });
     }
 
     // Panggil fungsi untuk membuat tabel
-    createTableHeader(jsonData);
-    populateTable(jsonData);
+    createTableHeader(headers);
+    populateTable(data);
   </script>
 </body>
 </html>
